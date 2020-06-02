@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Bkm7OONeNP8vikraC38NVwIRs60rY8S2/MpsyHkHwCn7UmNAkQfo7KTI0egyoQnWfgNnGFA2+GIJ3se0ovyAfg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\SollersFinal\\API\\SollarsFinalApp\\SollarsFinalApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

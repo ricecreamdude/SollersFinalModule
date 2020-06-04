@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-30 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Employee Dashboard</a>
+  <!-- <input class="form-control form-control-dark w-100" (ngModelChange)="searchchange($event)" [(ngModel)]="searchtxt" type="text" placeholder="Search" aria-label="Search"> -->
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Hello Bhaskar</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid" style="margin-top: 80px;"> 
+<table class="table table-hover table-dark">
+    <thead><tr>
+        <th scope="col" *ngFor="let column of columns">{{column}}</th>
+    </tr></thead>
+    <tbody>
+        <tr *ngFor="let emp of employees">
+            <td><input type="text" placeholder="First Name" [(ngModel)]="emp.firstName"></td>
+            <td><input type="text" placeholder="Last Name" [(ngModel)]="emp.lastName"></td>
+            <td><input type="text" placeholder="Email" [(ngModel)]="emp.email"></td>
+            <td><input type="text" placeholder="Gender" [(ngModel)]="emp.gender"></td>
+            <td><button  (click)="update(emp)">Save</button><button (click)="delete(emp)">Delete</button></td>
+        </tr>
+    </tbody>
+</table>
+</div>

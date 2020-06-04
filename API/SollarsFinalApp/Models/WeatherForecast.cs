@@ -1,6 +1,6 @@
 using System;
 
-namespace SollarsFinalApp
+namespace SollarsFinalApp.Models
 {
     public class WeatherForecast
     {

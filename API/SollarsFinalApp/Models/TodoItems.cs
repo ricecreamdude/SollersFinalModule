@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SollarsFinalApp.Model
+namespace SollarsFinalApp.Models
 {
     public class TodoItems
     {

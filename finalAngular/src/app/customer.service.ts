@@ -12,17 +12,24 @@ export class CustomerService {
   constructor( private httpclient:HttpClient ) { }
 
 
-  GetEmployees( ):Observable<any>
+  getCustomers( ):Observable<any>
   {
-    let url='http://localhost:62241/api/employee';
+    let url='http://localhost:50469/api/customer';
 
     let reqHeaders = new HttpHeaders();
 
       reqHeaders.set('Cache-Control', 'no-cache')
       reqHeaders.set('Pragma', 'no-cache')
-      //reqHeaders.set('Content-Type', 'application/json');
+      reqHeaders.set('Content-Type', 'application/json');
 
-    return this.httpclient.get(url,{headers:reqHeaders}).pipe(retry(3),catchError(err=>of([])));
+      
+    return this.httpclient.get(
+        url,
+        {headers:reqHeaders}
+    ).pipe( 
+      retry(3),
+      catchError( err=>of([]) ) 
+    );
   }
 
 }

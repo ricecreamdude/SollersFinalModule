@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
   getEmployees()
   {
-    this.custService.GetEmployees().subscribe(res=>{
+    this.custService.getCustomers().subscribe(res=>{
 
       let dummyData = [{
         firstName: "Joshua",
@@ -33,6 +33,9 @@ export class DashboardComponent implements OnInit {
         email: "ho.joshua4@gmail.com",
         gender: "Male"
       }];
+
+      //Fetch the information and view it
+      console.log(res);
 
       this.employees = dummyData;
 

@@ -11,20 +11,62 @@ export class CustomerService {
 
   constructor( private httpclient:HttpClient ) { }
 
+  url:string = 'http://localhost:50469/api/customer';
 
-  GetEmployees( ):Observable<any>
-  {
-    let url='http://localhost:62241/api/employee';
-
+  buildHeaders(){
     let reqHeaders = new HttpHeaders();
 
-      reqHeaders.set('Cache-Control', 'no-cache')
-      reqHeaders.set('Pragma', 'no-cache')
-      //reqHeaders.set('Content-Type', 'application/json');
+    reqHeaders.set('Cache-Control', 'no-cache')
+    reqHeaders.set('Pragma', 'no-cache')
+    reqHeaders.set('Content-Type', 'application/json');
 
-    return this.httpclient.get(url,{headers:reqHeaders}).pipe(retry(3),catchError(err=>of([])));
+    return reqHeaders
   }
 
+  //Get All Employees
+  GetEmployees( ):Observable<any>
+  {
+
+    let headers = this.buildHeaders();
+    let req = this.httpclient.get(this.url, {headers} );
+
+    //Return our data pipe to component for execution
+    return req.pipe( 
+                retry(3), 
+                catchError( err=>of([]) 
+                   ) 
+                );
+  }
+
+  //Get Single Employee
+
+  //Update
+  Post( data ):Observable<any>{
+
+    let headers = this.buildHeaders();
+
+    return this.httpclient.post( 
+      this.url, 
+      data,
+      {headers:headers}
+    ).pipe(
+
+    )
+
+  }
+  //Delete
+  Delete( id:number ):Observable<any>{
+
+    let headers = this.buildHeaders();
+
+    return this.httpclient.delete( 
+      `${this.url}/${id}`, 
+      {headers:headers}
+    ).pipe(
+
+    )
+
+  }
 }
 
 

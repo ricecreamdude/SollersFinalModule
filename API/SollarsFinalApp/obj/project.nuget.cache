@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SPdyaxw8gPKWpS0t9D3LplXA7ucZH1OgcCkQVG/sIiEQIM+QBIZIBwOBkWUk4HiT/nx2/mMz7LXEVkH3JGGkLw==",
+  "dgSpecHash": "EaZNIoCs1LQbz1kPVPs4R4ZdbniMEHikY+tfxHJuVG5298YMstCFTmmGHi/sByWUf/qlZnuHkVaK0uUbpDcv7A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Desktop\\SollersFinal\\API\\SollarsFinalApp\\SollarsFinalApp.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\SollersFinalModule\\API\\SollarsFinalApp\\SollarsFinalApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

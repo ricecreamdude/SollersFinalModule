@@ -10,32 +10,20 @@ import { CustomerService } from '../customer.service';
 })
 export class DashboardComponent implements OnInit {
 
-  employees = [{
-    firstName: "Joshua",
-    lastName: "Ho",
-    email: "ho.joshua4@gmail.com",
-    gender: "Male"
-  }];
+  employees = [];
   columns = ["First Name", "Last Name", "Email", "Gender", "Actions" ]
 
   constructor( private custService: CustomerService ) { }
 
   ngOnInit(): void {
+    this.getEmployees();
   }
 
   getEmployees()
   {
+
     this.custService.GetEmployees().subscribe(res=>{
-
-      let dummyData = [{
-        firstName: "Joshua",
-        lastName: "Ho",
-        email: "ho.joshua4@gmail.com",
-        gender: "Male"
-      }];
-
-      this.employees = dummyData;
-
+      this.employees = res;
     })
   }
 
@@ -44,7 +32,17 @@ export class DashboardComponent implements OnInit {
   }
 
   delete( emp ):void {
-    console.log(emp);
-  }
 
+    //Delete value via service
+    this.custService.Delete( emp.id ).subscribe( res => {
+
+      //Delete element in the array
+      this.employees.forEach((element, i) => {
+        if (element.id == emp.id){
+          this.employees.splice(i, 1);
+        }
+      });
+
+    });
+  }
 }

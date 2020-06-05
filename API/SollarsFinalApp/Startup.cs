@@ -28,7 +28,8 @@ namespace SollarsFinalApp
             {
                 corsOptions.AddPolicy("generalPolicy", confPolicy =>
                 {
-                    confPolicy.AllowAnyOrigin().WithOrigins(new string[] { "http://localhost:4200" }).WithMethods("GET", "DELETE", "POST").AllowAnyHeader();
+                    confPolicy.AllowAnyOrigin().WithOrigins(new string[] { "http://localhost:4200" }).WithMethods("GET", "DELETE", "POST", "PUT").AllowAnyHeader();
+
                 });
             });
 

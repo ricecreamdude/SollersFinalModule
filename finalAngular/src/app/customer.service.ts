@@ -33,14 +33,25 @@ export class CustomerService {
     //Return our data pipe to component for execution
     return req.pipe( 
                 retry(3), 
-                catchError( err=>of([]) 
-                   ) 
-                );
+                catchError( err=>of([])) 
+              );
   }
 
-  //Get Single Employee
+  //Delete
+  Delete( id:number ):Observable<any>{
 
-  //Update
+    let headers = this.buildHeaders();
+
+    return this.httpclient.delete( 
+      `${this.url}/${id}`, 
+      {headers}
+    ).pipe( 
+      retry(3), 
+      catchError( err=>of([])) 
+    );
+
+  }
+
   Post( data ):Observable<any>{
 
     let headers = this.buildHeaders();
@@ -49,22 +60,25 @@ export class CustomerService {
       this.url, 
       data,
       {headers:headers}
-    ).pipe(
-
-    )
+    ).pipe( 
+      retry(3), 
+      catchError( err=>of([])) 
+    );
 
   }
-  //Delete
-  Delete( id:number ):Observable<any>{
+
+  Update( id:number, data:object):Observable<any>{
 
     let headers = this.buildHeaders();
 
-    return this.httpclient.delete( 
+    return this.httpclient.put(
       `${this.url}/${id}`, 
-      {headers:headers}
-    ).pipe(
-
-    )
+      data,
+      {headers}
+    ).pipe( 
+      retry(3), 
+      catchError( err=>of([])) 
+    );
 
   }
 }

@@ -11,24 +11,29 @@ import { CustomerService } from '../customer.service';
 export class DashboardComponent implements OnInit {
 
   employees = [];
-  columns = ["First Name", "Last Name", "Email", "Gender", "Actions" ]
+  columns = ["First Name", "Last Name", "Email", "Actions" ]
 
   constructor( private custService: CustomerService ) { }
 
   ngOnInit(): void {
+    //Load our application
     this.getEmployees();
   }
 
   getEmployees()
   {
-
     this.custService.GetEmployees().subscribe(res=>{
       this.employees = res;
     })
   }
 
   update( emp ):void {
-    console.log(emp);
+
+    this.custService.Update( emp.id, emp ).subscribe(res => {
+      console.log(emp);
+    })
+
+
   }
 
   delete( emp ):void {

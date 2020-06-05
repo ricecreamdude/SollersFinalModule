@@ -25,7 +25,7 @@ namespace SollarsFinalApp.Models
 
 
         //What does this do?
-        //This is literally the endpoint which the controller is access by
+        //This is literally the endpoint which the controller is access by, or the api/[controller]
         public DbSet<Customers> Customer { get; set; }
 
         //Validate our model

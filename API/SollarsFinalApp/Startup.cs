@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+
+using SollarsFinalApp.Models;
 
 namespace SollarsFinalApp
 {
@@ -25,6 +21,23 @@ namespace SollarsFinalApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //CORS Policy
+
+            //Allows the angular application to access the API
+            services.AddCors(corsOptions =>
+            {
+                corsOptions.AddPolicy("generalPolicy", confPolicy =>
+                {
+                    confPolicy.AllowAnyOrigin().WithOrigins(new string[] { "http://localhost:4200" }).WithMethods("GET", "DELETE", "POST").AllowAnyHeader();
+                });
+            });
+
+            var conn = Configuration.GetConnectionString("finalDB");
+
+            //Connect to Microsoft DB Server and serve Customer
+            services.AddDbContext<CustomerContext>(optionsBuilder =>
+                            optionsBuilder.UseSqlServer(conn));
+
             services.AddControllers();
         }
 
@@ -39,6 +52,8 @@ namespace SollarsFinalApp
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("generalPolicy");
 
             app.UseAuthorization();
 

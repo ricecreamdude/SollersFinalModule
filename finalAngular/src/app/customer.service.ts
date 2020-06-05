@@ -11,16 +11,16 @@ export class CustomerService {
 
   constructor( private httpclient:HttpClient ) { }
 
-  url:string = 'http://localhost:50469/api/customer';
+  url:string = 'http://localhost:50469/api/customer'; //Integration Point
 
   buildHeaders(){
     let reqHeaders = new HttpHeaders();
 
-    reqHeaders.set('Cache-Control', 'no-cache')
-    reqHeaders.set('Pragma', 'no-cache')
+    reqHeaders.set('Cache-Control', 'no-cache');
+    reqHeaders.set('Pragma', 'no-cache');
     reqHeaders.set('Content-Type', 'application/json');
 
-    return reqHeaders
+    return reqHeaders;
   }
 
   //Get All Employees

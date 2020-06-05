@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomerService } from '../customer.service';
+
 
 
 @Component({
@@ -10,25 +11,56 @@ import { CustomerService } from '../customer.service';
 })
 export class DashboardComponent implements OnInit {
 
-  employees = [];
-  columns = ["First Name", "Last Name", "Email", "Gender", "Actions" ]
+  //Add Customer Form Properties
+  createCustomerForm: FormGroup;
+  subimitted:boolean = false;
 
-  constructor( private custService: CustomerService ) { }
+  //Customer Display Properties
+  employees = [];
+  columns = ["First Name", "Last Name", "Email", "Actions" ]
+
+  constructor( private custService: CustomerService, private formBuilder:FormBuilder ) { }
 
   ngOnInit(): void {
+    //Load our application
     this.getEmployees();
+  
+    this.createCustomerForm = this.formBuilder.group({
+      firstName:  ['', Validators.required],
+      lastName:   ['', Validators.required],
+      email:      ['', [Validators.email, Validators.required] ],
+    })
+  
   }
 
   getEmployees()
   {
-
     this.custService.GetEmployees().subscribe(res=>{
       this.employees = res;
     })
   }
 
+  //Todo - Make it so new people are only added to the end of the list
+  createCustomer():void{
+    this.subimitted = true;
+
+    if (this.createCustomerForm.invalid) return;
+
+    let data = this.createCustomerForm.value;
+
+    this.custService.Post( data ).subscribe( res =>{
+      this.getEmployees();
+    })
+
+
+  }
+
   update( emp ):void {
-    console.log(emp);
+
+    this.custService.Update( emp.id, emp ).subscribe(res => {
+      console.log(emp);
+    })
+    
   }
 
   delete( emp ):void {

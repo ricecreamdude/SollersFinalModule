@@ -26,8 +26,6 @@ export class DashboardComponent implements OnInit {
   getEmployees()
   {
     this.custService.GetEmployees().subscribe(res=>{
-      // debugger;
-
 
       let dummyData = [{
         firstName: "Joshua",

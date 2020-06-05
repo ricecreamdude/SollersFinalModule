@@ -57,7 +57,7 @@ namespace SollarsFinalApp.Controllers
 
             var customers = _customerContext.Customer.ToList();
 
-            //Find matching record (via 
+            //Find matching record (via LINQ)
             var match = ( from c in customers
                        where id == c.Id
                        select c).SingleOrDefault();
@@ -77,9 +77,18 @@ namespace SollarsFinalApp.Controllers
         }
 
         //// DELETE api/<CustomerController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var customers = _customerContext.Customer.ToList();
+
+            var match = (from c in customers
+                         where id == c.Id
+                         select c).SingleOrDefault();
+
+            _customerContext.Remove(match);
+
+            return Ok(_customerContext.SaveChanges());
+        }
     }
 }

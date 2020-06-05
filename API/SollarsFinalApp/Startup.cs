@@ -22,26 +22,21 @@ namespace SollarsFinalApp
         public void ConfigureServices(IServiceCollection services)
         {
             //CORS Policy
+
+            //Allows the angular application to access the API
             services.AddCors(corsOptions =>
             {
-                corsOptions.AddPolicy("p1", confPolicy =>
+                corsOptions.AddPolicy("generalPolicy", confPolicy =>
                 {
                     confPolicy.AllowAnyOrigin().WithOrigins(new string[] { "http://localhost:4200" }).WithMethods("GET", "DELETE", "POST").AllowAnyHeader();
                 });
             });
 
-            var conn = Configuration.GetConnectionString("EmployeeDb");
+            var conn = Configuration.GetConnectionString("finalDB");
 
-            //Connect to Microsoft DB Server 
+            //Connect to Microsoft DB Server and serve Customer
             services.AddDbContext<CustomerContext>(optionsBuilder =>
                             optionsBuilder.UseSqlServer(conn));
-
-            //Adds TodoList to available services
-            //services.AddDbContext<TodoContext>(optionsBuilder =>
-            //   optionsBuilder.UseInMemoryDatabase("TodoList"));
-            ////Add Customer to available services
-            //services.AddDbContext<CustomerContext>(optionsBuilder =>
-            //   optionsBuilder.UseInMemoryDatabase("Customer"));
 
             services.AddControllers();
         }
@@ -58,7 +53,7 @@ namespace SollarsFinalApp
 
             app.UseRouting();
 
-            app.UseCors("p1");
+            app.UseCors("generalPolicy");
 
             app.UseAuthorization();
 

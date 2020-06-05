@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SollarsFinalApp.Models
 {
-    public class Customers
+    public partial class Customers
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

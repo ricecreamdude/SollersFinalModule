@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using SollarsFinalApp.Models;
 
@@ -17,13 +18,42 @@ namespace SollarsFinalApp.Controllers
             _customerContext = customerContext;
         }
 
-        // GET: api/<CustomerController>
-        [HttpGet]
-        public IActionResult GetCustomers()
+        /*
+        *  TEST ZONE
+        */
+        public delegate IActionResult RequestCallback();
+
+        //Using this structure allows us to templatize the try catch block
+        public IActionResult RequestHandler(RequestCallback callback)
         {
-            var customers = _customerContext.Customer.ToList();
-            return Ok(customers);
+            try { return callback(); }
+            catch { return StatusCode(500); }
         }
+
+        [HttpGet]
+        public IActionResult GetHandler()
+        {
+            // Pass a function into the Request callback delegate.  Lambda function
+            // inherits parameter type of RequestHandler parameter definition
+            return RequestHandler( () => {
+                var customers = _customerContext.Customer.ToList();
+                return Ok(customers);
+            });
+        }
+
+
+        /*
+         *  TEST ZONE
+        */
+
+
+        // GET: api/<CustomerController>
+        //[HttpGet]
+        //public IActionResult GetCustomers()
+        //{
+        //    var customers = _customerContext.Customer.ToList();
+        //    return Ok(customers);
+        //}
 
         //// GET api/<CustomerController>/5
         [HttpGet("{id}")]
@@ -44,7 +74,6 @@ namespace SollarsFinalApp.Controllers
         [HttpPost]
         public IActionResult Post(Customers customer)
         {
-
             _customerContext.Customer.Add(customer);
 
             return Ok(_customerContext.SaveChanges());

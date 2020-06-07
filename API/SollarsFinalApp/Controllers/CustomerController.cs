@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -55,18 +56,21 @@ namespace SollarsFinalApp.Controllers
         //    return Ok(customers);
         //}
 
-        //// GET api/<CustomerController>/5
+        // GET api/<CustomerController>/5
         [HttpGet("{id}")]
         public IActionResult GetCustomerById(int id)
         {
-            var customers = _customerContext.Customer.ToList();
+            //Using the callback loop we are able to access the values in the get request method directly 
+            //and write to the response.
+            return RequestHandler( () => {
+                //Explictly typed
+                List<Customers> customers = _customerContext.Customer.ToList();
 
-            foreach (Customers cust in customers)
-            {
-                if (cust.Id == id) return Ok(cust);
-            }
+                foreach (Customers cust in customers)
+                    if (cust.Id == id) return Ok(cust);
 
-            return NotFound($"No customer with id {id} found.");
+                return NotFound("Employee not found");
+            });
 
         }
 
@@ -74,50 +78,61 @@ namespace SollarsFinalApp.Controllers
         [HttpPost]
         public IActionResult Post(Customers customer)
         {
-            _customerContext.Customer.Add(customer);
+            return RequestHandler(() =>
+           {
+               _customerContext.Customer.Add(customer);
+               _customerContext.SaveChanges();
 
-            return Ok(_customerContext.SaveChanges());
+               //Save DB
+               return Ok("Created new customer.");
+           });
         }
 
-        //// PUT api/<CustomerController>/5
+        // PUT api/<CustomerController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, Customers customer)
         {
+           return RequestHandler(() =>
+           {
+               var customers = _customerContext.Customer.ToList();
 
-            var customers = _customerContext.Customer.ToList();
+               //Find matching record (via LINQ)
+               var match = (from c in customers
+                            where id == c.Id
+                            select c).SingleOrDefault();
 
-            //Find matching record (via LINQ)
-            var match = ( from c in customers
-                       where id == c.Id
-                       select c).SingleOrDefault();
+               //Update all fields
+               match.FirstName = customer.FirstName;
+               match.LastName = customer.LastName;
+               match.Email = customer.Email;
 
-            //Update all fields
-            match.FirstName = customer.FirstName;
-            match.LastName = customer.LastName;
-            match.Email = customer.Email;
+               //Save DB
+               _customerContext.SaveChanges();
 
-            //Update database value
-            _customerContext.Update(match);
-
-            //Save
-            return Ok(_customerContext.SaveChanges());
- 
+               return Ok("Customer Updated");
+           });
 
         }
 
-        //// DELETE api/<CustomerController>/5
+        // DELETE api/<CustomerController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var customers = _customerContext.Customer.ToList();
+           return RequestHandler(() =>
+           {
+               var customers = _customerContext.Customer.ToList();
 
-            var match = (from c in customers
-                         where id == c.Id
-                         select c).SingleOrDefault();
+               var match = (from c in customers
+                            where id == c.Id
+                            select c).SingleOrDefault();
 
-            _customerContext.Remove(match);
+               _customerContext.Remove(match);
 
-            return Ok(_customerContext.SaveChanges());
+               _customerContext.SaveChanges();
+
+               return Ok("Customer deleted");
+           });
+
         }
     }
 }

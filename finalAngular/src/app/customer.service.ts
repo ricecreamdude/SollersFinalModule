@@ -37,7 +37,7 @@ export class CustomerService {
               );
   }
 
-  //Delete
+  //DELETE
   Delete( id:number ):Observable<any>{
 
     let headers = this.buildHeaders();
@@ -52,6 +52,7 @@ export class CustomerService {
 
   }
 
+  //POST
   Post( data ):Observable<any>{
 
     let headers = this.buildHeaders();
@@ -60,13 +61,13 @@ export class CustomerService {
       this.url, 
       data,
       {headers:headers}
-    ).pipe( 
-      retry(3), 
+    ).pipe(  
       catchError( err=>of([])) 
     );
 
   }
 
+  //UPDATE
   Update( id:number, data:object):Observable<any>{
 
     let headers = this.buildHeaders();

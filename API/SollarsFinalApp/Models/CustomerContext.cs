@@ -23,12 +23,10 @@ namespace SollarsFinalApp.Models
 
         }
 
-
-        //What does this do?
-        //This is literally the endpoint which the controller is access by, or the api/[controller]
+        //The name of the table
         public DbSet<Customers> Customer { get; set; }
 
-        //Validate our model
+        //Mapping data to our model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customers>(entity =>
@@ -40,7 +38,6 @@ namespace SollarsFinalApp.Models
                 entity.Property(e => e.FirstName).HasMaxLength(20);
 
                 entity.Property(e => e.LastName).HasMaxLength(50);
-
             });
 
             OnModelCreatingPartial(modelBuilder);

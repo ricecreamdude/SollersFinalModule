@@ -10,71 +10,76 @@
 
 <div class="container-fluid" style="margin-top: 80px;"> 
   <div class="row">
+
     <div class="col-sm-6">
-    <h3 style=" padding-bottom: 30px;">Add New Customer</h3>
-    <form [formGroup]="createCustomerForm">
-      <div style=" padding-bottom: 20px;" class="form-row">
-        <div class="col">
-          <label for="fname"> <strong>First Name</strong></label>
-          <input id="fname" 
-            type="text" 
+      <h3 style=" padding-bottom: 30px;">Add New Customer</h3>
+      <form [formGroup]="createCustomerForm">
+        <div style=" padding-bottom: 20px;" class="form-row">
+          <div class="col">
+            <label for="fname"> <strong>First Name</strong></label>
+            <input id="fname" 
+              type="text" 
+              class="form-control" 
+              placeholder="Joe"
+              formControlName="firstName"
+            >
+          </div>
+          <div class="col">
+            <label for="lname"><strong>Last Name</strong></label>
+            <input id="lname" 
+              type="text" 
+              class="form-control" 
+              placeholder="Hisashi"
+              formControlName="lastName"
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email"><strong>Email address</strong></label>
+          <input type="email" 
             class="form-control" 
-            placeholder="Joe"
-            formControlName="firstName"
+            id="email" 
+            placeholder="name@example.com"
+            formControlName="email"
           >
         </div>
-        <div class="col">
-          <label for="lname"><strong>Last Name</strong></label>
-          <input id="lname" 
-            type="text" 
-            class="form-control" 
-            placeholder="Hisashi"
-            formControlName="lastName"
-          >
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="email"><strong>Email address</strong></label>
-        <input type="email" 
-          class="form-control" 
-          id="email" 
-          placeholder="name@example.com"
-          formControlName="email"
-        >
-      </div>
-      <button (click)="createCustomer()" class="btn btn-primary">Add Customer</button>
-    </form>
+        <button (click)="createCustomer()" class="btn btn-primary">Add Customer</button>
+      </form>
+
+    </div>
+    <div class="col-sm-6">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <h3 style=" padding-bottom: 30px;">Existing Customers</h3>
+          </tr>
+          <tr>
+            <th scope="col" *ngFor="let column of columns">{{column}}</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!employees.length">
+          <div class="container">
+            <div class="row" style="text-align: center;">
+              <h3 style="padding-top: 30px; color: gray;"> Add a Customer!</h3>
+            </div> 
+          </div>
+        </tbody>
+        <tbody>
+            <tr *ngFor="let emp of employees">
+                <td><input type="text" placeholder="First Name" [(ngModel)]="emp.firstName"></td>
+                <td><input type="text" placeholder="Last Name" [(ngModel)]="emp.lastName"></td>
+                <td><input type="text" placeholder="Email" [(ngModel)]="emp.email"></td>
+                <td>
+                  <button class="btn btn-info" (click)="update(emp)" style="margin-right:5px ">Update</button>
+                  <button class="btn btn-danger" (click)="delete(emp)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+      </table>
 
     </div>
 
-    <table class="table table-hover col-sm-6">
-      <thead>
-        <tr>
-          <h3 style=" padding-bottom: 30px;">Existing Customers</h3>
-        </tr>
-        <tr>
-          <th scope="col" *ngFor="let column of columns">{{column}}</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="!employees.length">
-        <div class="container">
-          <div class="row" style="text-align: center;">
-            <h3 style="padding-top: 30px; color: gray;"> Add a Customer!</h3>
-          </div> 
-        </div>
-      </tbody>
-      <tbody>
-          <tr *ngFor="let emp of employees">
-              <td><input type="text" placeholder="First Name" [(ngModel)]="emp.firstName"></td>
-              <td><input type="text" placeholder="Last Name" [(ngModel)]="emp.lastName"></td>
-              <td><input type="text" placeholder="Email" [(ngModel)]="emp.email"></td>
-              <td>
-                <button class="btn btn-info" (click)="update(emp)" style="margin-right:5px ">Update</button>
-                <button class="btn btn-danger" (click)="delete(emp)">Delete</button>
-              </td>
-          </tr>
-      </tbody>
-    </table>
+    
 
   </div> 
 
